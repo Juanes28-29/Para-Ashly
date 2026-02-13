@@ -78,13 +78,36 @@ font-size:26px;
 margin-bottom:15px;
 }
 
+/* ===== APolo PRO ===== */
+
 .apolo{
 font-size:140px;
 cursor:pointer;
-transition:.3s;
+animation:respirar 3s infinite ease-in-out;
 }
 
-.apolo:hover{transform:scale(1.1)}
+@keyframes respirar{
+0%{transform:scale(1)}
+50%{transform:scale(1.08)}
+100%{transform:scale(1)}
+}
+
+@keyframes saltar{
+0%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
+100%{transform:translateY(0)}
+}
+
+.corazon{
+position:absolute;
+font-size:20px;
+animation:subir 2s linear forwards;
+}
+
+@keyframes subir{
+0%{transform:translateY(0);opacity:1}
+100%{transform:translateY(-120px);opacity:0}
+}
 
 .globo{
 position:absolute;
@@ -168,6 +191,9 @@ to{transform:translateY(110vh)}
 </div>
 </div>
 
+<!-- AUDIO RONRONEO -->
+<audio id="ronroneo" src="ronroneo.mp3"></audio>
+
 <script>
 const frases=[
 "Eres lo mejor que me ha pasado",
@@ -200,22 +226,16 @@ pregunta.classList.remove("hidden");
 
 function huir(){
 intentosNo++;
-
 let x=Math.random()*300-150;
 let y=Math.random()*200-100;
 noBtn.style.transform=`translate(${x}px,${y}px)`;
-
-/* Para celular */
 noBtn.style.position="relative";
-
-/* Después de varios intentos desaparece */
 if(intentosNo>=5){
 noBtn.style.opacity="0";
 noBtn.style.pointerEvents="none";
 }
 }
 
-/* Soporte táctil móvil */
 noBtn.addEventListener("touchstart",huir);
 
 function aceptar(){
@@ -235,20 +255,14 @@ frase.innerText=frases[i];
 }
 
 function next(){
-if(i<10){
-i++;
-mostrar();
-}
-else{
-mostrarFinal();
-}
+if(i<10){i++;mostrar();}
+else{mostrarFinal();}
 }
 
 function prev(){
 if(i>0){i--;mostrar();}
 }
 
-/* PANTALLA FINAL */
 function mostrarFinal(){
 galeria.innerHTML=`
 <h1 style="font-size:60px;">TE AMO MUCHO ❤️</h1>
@@ -257,14 +271,45 @@ galeria.innerHTML=`
 `;
 }
 
-/* REGRESAR AL LOGIN */
 function volverInicio(){
 location.reload();
 }
 
+/* ===== APolo PRO INTERACTIVO ===== */
+
 function apolo(){
+
+const gato=document.querySelector(".apolo");
+const audio=document.getElementById("ronroneo");
+
+/* Vibración móvil */
+if(navigator.vibrate){
+navigator.vibrate(200);
+}
+
+/* Sonido */
+audio.currentTime=0;
+audio.play();
+
+/* Globo */
 globo.style.display="block";
 setTimeout(()=>globo.style.display="none",2000);
+
+/* Saltito */
+gato.style.animation="saltar 0.5s";
+setTimeout(()=>{
+gato.style.animation="respirar 3s infinite ease-in-out";
+},500);
+
+/* Corazones */
+for(let j=0;j<6;j++){
+let c=document.createElement("div");
+c.innerText="❤️";
+c.className="corazon";
+c.style.left=(Math.random()*60-30)+"px";
+gato.parentElement.appendChild(c);
+setTimeout(()=>c.remove(),2000);
+}
 }
 
 function crearFlores(){
