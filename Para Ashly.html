@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>San Valentín ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI';
+background:linear-gradient(135deg,#8b0000,#ff4d6d,#ff99ac);
+height:100vh;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+.hidden{display:none}
+
+.container{
+text-align:center;
+animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:scale(.8)}
+to{opacity:1}
+}
+
+input{
+padding:12px;
+border-radius:10px;
+border:none;
+font-size:18px;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+font-size:18px;
+margin:10px;
+transition:.3s;
+}
+
+button:hover{transform:scale(1.1)}
+
+.si{background:#ff006e;color:white}
+.no{background:#333;color:white}
+
+.carta{
+background:#fff3e0;
+color:#5a0000;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+cursor:pointer;
+font-size:28px;
+}
+
+.galeria{
+display:flex;
+align-items:center;
+gap:30px;
+}
+
+.foto{
+width:300px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.5);
+}
+
+.frase{
+font-size:26px;
+margin-bottom:15px;
+}
+
+.apolo{
+font-size:140px;
+cursor:pointer;
+transition:.3s;
+}
+
+.apolo:hover{transform:scale(1.1)}
+
+.globo{
+position:absolute;
+background:white;
+color:#333;
+padding:10px 15px;
+border-radius:20px;
+top:-40px;
+left:50%;
+transform:translateX(-50%);
+display:none;
+}
+
+.nav{
+margin-top:20px;
+}
+
+.flores span{
+position:absolute;
+font-size:20px;
+animation:caer linear infinite;
+}
+
+@keyframes caer{
+from{transform:translateY(-100px)}
+to{transform:translateY(110vh)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="flores" id="flores"></div>
+
+<!-- LOGIN -->
+<div class="container" id="login">
+<h1>❤️</h1>
+<p>Ingresa la contraseña</p>
+<input id="pass" placeholder="DDMM">
+<br><br>
+<button onclick="check()">Entrar 💌</button>
+</div>
+
+<!-- CARTA -->
+<div class="container hidden" id="carta">
+<div class="carta" onclick="mostrarPregunta()">
+💌 Toca para abrir tu carta 💌
+</div>
+</div>
+
+<!-- PREGUNTA -->
+<div class="container hidden" id="pregunta">
+<h2>¿Quieres ser mi San Valentín? ❤️</h2>
+<button class="si" onclick="aceptar()">SÍ 💖</button>
+<button class="no" id="noBtn" onmouseover="huir()">NO 😢</button>
+</div>
+
+<!-- MENSAJE -->
+<div class="container hidden" id="mensaje">
+<h2>Gracias por ser mi San Valentín 💘</h2>
+<button onclick="iniciarGaleria()">Continuar 🌹</button>
+</div>
+
+<!-- GALERIA -->
+<div class="container hidden" id="galeria">
+<div class="frase" id="frase"></div>
+
+<div class="galeria">
+<img id="foto" class="foto">
+
+<div style="position:relative;">
+<div class="globo" id="globo">Te amo Ashly ❤️</div>
+<div class="apolo" onclick="apolo()">🐈</div>
+<p>Acaricia a Apolo</p>
+</div>
+</div>
+
+<div class="nav">
+<button onclick="prev()">⬅️ Anterior</button>
+<button onclick="next()">Siguiente ➡️</button>
+</div>
+</div>
+
+<script>
+const frases=[
+"Eres lo mejor que me ha pasado",
+"Tu sonrisa ilumina mis días",
+"Contigo todo es mágico",
+"Me haces feliz",
+"Eres mi lugar seguro",
+"Amo cada momento contigo",
+"Eres mi inspiración",
+"Gracias por existir",
+"Eres mi todo",
+"Siempre contigo",
+"TE AMO MUCHO ❤️"
+];
+
+let i=0;
+let intentosNo=0;
+
+function check(){
+if(pass.value==="2412"){
+login.classList.add("hidden");
+carta.classList.remove("hidden");
+}
+}
+
+function mostrarPregunta(){
+carta.classList.add("hidden");
+pregunta.classList.remove("hidden");
+}
+
+function huir(){
+intentosNo++;
+
+let x=Math.random()*300-150;
+let y=Math.random()*200-100;
+noBtn.style.transform=`translate(${x}px,${y}px)`;
+
+/* Para celular */
+noBtn.style.position="relative";
+
+/* Después de varios intentos desaparece */
+if(intentosNo>=5){
+noBtn.style.opacity="0";
+noBtn.style.pointerEvents="none";
+}
+}
+
+/* Soporte táctil móvil */
+noBtn.addEventListener("touchstart",huir);
+
+function aceptar(){
+pregunta.classList.add("hidden");
+mensaje.classList.remove("hidden");
+}
+
+function iniciarGaleria(){
+mensaje.classList.add("hidden");
+galeria.classList.remove("hidden");
+mostrar();
+}
+
+function mostrar(){
+foto.src="foto"+(i+1)+".jpeg";
+frase.innerText=frases[i];
+}
+
+function next(){
+if(i<10){
+i++;
+mostrar();
+}
+else{
+mostrarFinal();
+}
+}
+
+function prev(){
+if(i>0){i--;mostrar();}
+}
+
+/* PANTALLA FINAL */
+function mostrarFinal(){
+galeria.innerHTML=`
+<h1 style="font-size:60px;">TE AMO MUCHO ❤️</h1>
+<br>
+<button onclick="volverInicio()">Volver al inicio 💌</button>
+`;
+}
+
+/* REGRESAR AL LOGIN */
+function volverInicio(){
+location.reload();
+}
+
+function apolo(){
+globo.style.display="block";
+setTimeout(()=>globo.style.display="none",2000);
+}
+
+function crearFlores(){
+for(let j=0;j<30;j++){
+let f=document.createElement("span");
+f.innerText="🌹";
+f.style.left=Math.random()*100+"%";
+f.style.animationDuration=(Math.random()*5+5)+"s";
+flores.appendChild(f);
+}
+}
+crearFlores();
+</script>
+
+</body>
+</html>
