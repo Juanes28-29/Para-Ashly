@@ -2,410 +2,730 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>San Valentín ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
+/* ===== VARIABLES Y BASE ===== */
+:root {
+  --rosa: #ff4d6d;
+  --rosa-claro: #ff8fa3;
+  --rosa-oscuro: #c9184a;
+  --vino: #8b0000;
+  --dorado: #d4a574;
+  --crema: #fff0f3;
+  --sombra: rgba(0,0,0,.35);
+  --escala-movil: min(1.2, max(1, (100vw / 400)));
+}
 
-/* ===== FONDO ===== */
+* { box-sizing: border-box; }
 
-body{
-margin:0;
-font-family:'Segoe UI';
-background:radial-gradient(circle at top,#ff4d6d,#8b0000 70%);
-min-height:100vh;
-overflow:hidden;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-perspective:1500px;
+body {
+  margin: 0;
+  font-family: 'Quicksand', 'Segoe UI', sans-serif;
+  background: radial-gradient(ellipse at 30% 20%, #ff758f 0%, #ff4d6d 25%, #c9184a 60%, #8b0000 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  perspective: 1800px;
+  font-size: clamp(16px, 4.5vw, 22px);
+  padding: clamp(12px, 4vw, 24px);
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ===== CONTENEDORES ===== */
-
-.container{
-text-align:center;
-animation:fade 1s ease;
-width:100%;
-padding:20px;
-box-sizing:border-box;
+.container {
+  text-align: center;
+  animation: fadeIn 0.8s ease forwards;
+  width: 100%;
+  max-width: 520px;
+  padding: clamp(20px, 6vw, 36px);
+  margin: auto;
 }
 
-.hidden{display:none}
+.hidden { display: none !important; }
 
-@keyframes fade{
-from{opacity:0;transform:scale(.8)}
-to{opacity:1}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ===== LOGIN 3D ===== */
+#login {
+  transform-style: preserve-3d;
+}
+
+.login-box {
+  background: linear-gradient(145deg, rgba(255,255,255,.95) 0%, rgba(255,240,243,.98) 100%);
+  color: #5a0000;
+  padding: clamp(28px, 8vw, 44px);
+  border-radius: 24px;
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.4),
+    0 0 0 1px rgba(255,255,255,.3),
+    inset 0 1px 0 rgba(255,255,255,.8);
+  transform-style: preserve-3d;
+  animation: loginFloat 4s ease-in-out infinite, login3D 1.2s ease forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--rosa), var(--rosa-claro), var(--dorado), var(--rosa));
+  background-size: 200% 100%;
+  animation: shimmer 3s ease infinite;
+}
+
+@keyframes loginFloat {
+  0%, 100% { transform: translateY(0) rotateY(0deg) rotateX(0deg); }
+  50% { transform: translateY(-8px) rotateY(2deg) rotateX(1deg); }
+}
+
+@keyframes login3D {
+  from { opacity: 0; transform: translateY(30px) rotateX(-15deg); }
+  to { opacity: 1; transform: translateY(0) rotateX(0deg); }
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 0; }
+  50% { background-position: 100% 0; }
+}
+
+#login h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 5vw, 1.9rem);
+  margin: 0 0 8px 0;
+  color: var(--vino);
+}
+
+.login-hint {
+  font-size: clamp(0.85rem, 3.5vw, 1rem);
+  color: var(--rosa-oscuro);
+  opacity: .9;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+#pass {
+  width: 100%;
+  max-width: 200px;
+  padding: 14px 20px;
+  font-size: clamp(1.1rem, 4vw, 1.3rem);
+  border: 2px solid var(--rosa-claro);
+  border-radius: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+  transition: transform .3s, box-shadow .3s;
+  font-family: inherit;
+}
+
+#pass:focus {
+  outline: none;
+  border-color: var(--rosa);
+  box-shadow: 0 0 0 4px rgba(255,77,109,.25);
+  transform: scale(1.02);
 }
 
 /* ===== SOBRE 3D ===== */
-
-.envelope{
-width:320px;
-height:220px;
-position:relative;
-cursor:pointer;
-transition:1s;
-margin:auto;
-transform-style:preserve-3d;
+.envelope {
+  width: min(340px, 85vw);
+  height: min(240px, 60vw);
+  position: relative;
+  cursor: pointer;
+  transition: transform .6s cubic-bezier(.34,1.56,.64,1), box-shadow .5s;
+  margin: auto;
+  transform-style: preserve-3d;
 }
 
-.envelope:hover{
-transform:rotateY(10deg) rotateX(6deg) scale(1.05);
+.envelope:hover {
+  transform: rotateY(12deg) rotateX(8deg) scale(1.08);
+  filter: drop-shadow(0 25px 40px rgba(0,0,0,.5));
 }
 
-.envelope-body{
-position:absolute;
-width:100%;
-height:100%;
-background:#fff0f3;
-border-radius:10px;
-box-shadow:0 20px 50px rgba(0,0,0,.6);
+.envelope-body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #fff5f7 0%, #ffe4e9 100%);
+  border-radius: 16px;
+  box-shadow: 0 25px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.8);
 }
 
-.envelope-flap{
-position:absolute;
-top:0;
-width:100%;
-height:110px;
-background:#ff4d6d;
-clip-path:polygon(0 0,100% 0,50% 100%);
-transform-origin:top;
-transition:1s;
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 55%;
+  background: linear-gradient(180deg, var(--rosa) 0%, var(--rosa-oscuro) 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  transition: transform .8s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
 }
 
-.envelope.open .envelope-flap{
-transform:rotateX(180deg);
+.envelope.open .envelope-flap {
+  transform: rotateX(-180deg);
 }
 
-.envelope.open{
-transform:scale(.9) translateY(-100px);
-opacity:0;
+.envelope.open {
+  transform: scale(0.85) translateY(-120px) rotateX(10deg);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 1s, opacity .8s;
 }
 
 /* ===== HOJA CARTA 3D ===== */
-
-.card{
-background:#fdf6e3;
-color:#5a0000;
-padding:35px;
-border-radius:12px;
-box-shadow:0 30px 70px rgba(0,0,0,.7);
-width:95%;
-max-width:700px;
-margin:auto;
-position:relative;
-border:2px solid #e0c8a0;
-transform-style:preserve-3d;
-transition:.6s;
-animation:flotar 5s infinite ease-in-out;
+.card {
+  background: linear-gradient(160deg, #fdf8f0 0%, #fdf6e3 50%, #f5ecd8 100%);
+  color: #5a0000;
+  padding: clamp(28px, 6vw, 42px);
+  border-radius: 20px;
+  box-shadow:
+    0 35px 80px rgba(0,0,0,.45),
+    0 0 0 1px rgba(224,200,160,.5),
+    inset 0 1px 0 rgba(255,255,255,.9);
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
+  position: relative;
+  border: 3px solid var(--dorado);
+  transform-style: preserve-3d;
+  transition: transform .5s ease;
+  animation: cardFloat 6s ease-in-out infinite;
 }
 
-.card:hover{
-transform:rotateY(5deg) rotateX(3deg);
+.card:hover {
+  transform: rotateY(6deg) rotateX(4deg) scale(1.02);
 }
 
-@keyframes flotar{
-50%{transform:translateY(-12px)}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-/* textura papel */
-.card::before{
-content:"";
-position:absolute;
-inset:0;
-background:repeating-linear-gradient(
-0deg,
-transparent,
-transparent 24px,
-rgba(0,0,0,.04) 25px
-);
-pointer-events:none;
-border-radius:12px;
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 26px,
+    rgba(0,0,0,.03) 27px
+  );
+  pointer-events: none;
+  border-radius: 18px;
 }
 
-.card::after{
-content:"❤️ Feliz San Valentín ❤️";
-position:absolute;
-top:10px;
-left:0;
-right:0;
-text-align:center;
-font-weight:bold;
-opacity:.25;
+.card::after {
+  content: "❤️ Feliz San Valentín ❤️";
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: bold;
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
+  opacity: .2;
+  letter-spacing: .05em;
 }
 
-/* ===== GALERIA ===== */
+/* ===== GALERÍA Y FOTOS CON MARCO ===== */
+.galeria { display: flex; flex-wrap: wrap; gap: clamp(20px, 5vw, 32px); align-items: center; justify-content: center; }
 
-.galeria{
-display:flex;
-flex-wrap:wrap;
-gap:30px;
-align-items:center;
-justify-content:center;
+.foto-wrapper {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform .6s cubic-bezier(.34,1.56,.64,1);
 }
 
-/* FOTO 3D */
-
-.foto{
-width:260px;
-max-width:80vw;
-border-radius:12px;
-box-shadow:0 20px 60px rgba(0,0,0,.6);
-transition:.6s;
-transform-style:preserve-3d;
+.foto-wrapper:hover {
+  transform: rotateY(-8deg) rotateX(4deg) scale(1.03);
 }
 
-.foto:hover{
-transform:rotateY(15deg) scale(1.07);
+.foto-wrapper .frame {
+  padding: clamp(12px, 3vw, 20px);
+  background: linear-gradient(145deg, #fffef9 0%, #fdf6e3 30%, #f0e6d3 100%);
+  border-radius: 8px;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.4),
+    0 0 0 3px var(--dorado),
+    0 0 0 6px rgba(212,165,116,.4),
+    inset 0 1px 0 rgba(255,255,255,.9);
+  position: relative;
 }
 
-.frase{
-font-size:22px;
-margin-bottom:20px;
-font-weight:600;
+.foto-wrapper .frame::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 10px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--rosa-claro), var(--dorado), var(--rosa-claro));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.foto {
+  width: min(280px, 78vw);
+  height: auto;
+  max-height: 55vh;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  transition: transform .4s;
+}
+
+.foto-wrapper:hover .foto {
+  transform: scale(1.02);
+}
+
+/* Transición 3D al cambiar imagen */
+.foto-enter {
+  animation: fotoEntrada .6s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+.foto-salida {
+  animation: fotoSalida .4s ease forwards;
+}
+
+@keyframes fotoEntrada {
+  from {
+    opacity: 0;
+    transform: rotateY(-25deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+@keyframes fotoSalida {
+  to {
+    opacity: 0;
+    transform: rotateY(20deg) scale(0.95);
+  }
+}
+
+.frase {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+  margin-bottom: clamp(16px, 4vw, 24px);
+  font-weight: 600;
+  color: var(--vino);
+  text-shadow: 0 1px 2px rgba(255,255,255,.3);
+}
+
+/* ===== APOLO MEJORADO ===== */
+.apolo-zone {
+  position: relative;
+  display: inline-block;
+}
+
+.apolo {
+  font-size: clamp(100px, 28vw, 140px);
+  cursor: pointer;
+  user-select: none;
+  transform-style: preserve-3d;
+  display: inline-block;
+  animation: apoloIdle 4s ease-in-out infinite;
+  transition: transform .25s ease;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.25));
+}
+
+.apolo:hover {
+  animation: none;
+  transform: scale(1.15) rotate(-5deg);
+}
+
+.apolo:active {
+  animation: apoloPaw .4s ease;
+}
+
+.apolo.petting {
+  animation: apoloPet 0.6s ease;
+}
+
+@keyframes apoloIdle {
+  0%, 100% { transform: scale(1) rotate(0deg) translateY(0); }
+  25% { transform: scale(1.05) rotate(2deg) translateY(-3px); }
+  50% { transform: scale(1.08) rotate(-1deg) translateY(-5px); }
+  75% { transform: scale(1.04) rotate(1deg) translateY(-2px); }
+}
+
+@keyframes apoloPaw {
+  0% { transform: scale(1.2); }
+  50% { transform: scale(1.35) rotate(-8deg); }
+  100% { transform: scale(1.15) rotate(-3deg); }
+}
+
+@keyframes apoloPet {
+  0% { transform: scale(1.1); }
+  30% { transform: scale(1.3) rotate(-10deg); }
+  60% { transform: scale(1.25) rotate(8deg); }
+  100% { transform: scale(1.15); }
+}
+
+.corazon {
+  position: absolute;
+  pointer-events: none;
+  animation: corazonSubir 2.2s ease-out forwards;
+  font-size: clamp(20px, 5vw, 28px);
+}
+
+@keyframes corazonSubir {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-50px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-130px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.globo {
+  position: absolute;
+  background: linear-gradient(145deg, #fff 0%, #fff5f7 100%);
+  color: var(--vino);
+  padding: 12px 18px;
+  border-radius: 20px;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  box-shadow: 0 8px 25px rgba(0,0,0,.2);
+  border: 2px solid var(--rosa-claro);
+  animation: globoAparece .4s cubic-bezier(.34,1.56,.64,1);
+}
+
+.globo::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 10px solid transparent;
+  border-top-color: #fff5f7;
+}
+
+@keyframes globoAparece {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+.acaricia {
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  margin-top: 8px;
+  opacity: .95;
 }
 
 /* ===== BOTONES 3D ===== */
-
-button{
-padding:12px 24px;
-border:none;
-border-radius:25px;
-cursor:pointer;
-font-size:18px;
-margin:10px;
-transition:.4s;
-transform-style:preserve-3d;
+button {
+  padding: clamp(14px, 4vw, 18px) clamp(28px, 8vw, 36px);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  margin: 10px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  transform-style: preserve-3d;
+  transition: transform .25s ease, box-shadow .25s ease;
+  position: relative;
+  box-shadow:
+    0 6px 0 rgba(0,0,0,.2),
+    0 10px 25px rgba(0,0,0,.25);
 }
 
-button:hover{
-transform:translateY(-6px) rotateX(10deg) scale(1.08);
-box-shadow:0 15px 40px rgba(0,0,0,.6);
+button:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow:
+    0 10px 0 rgba(0,0,0,.15),
+    0 18px 35px rgba(0,0,0,.35);
 }
 
-.si{background:#ff006e;color:white}
-.no{background:#333;color:white}
-
-/* ===== APOLLO 3D ===== */
-
-.apolo{
-font-size:110px;
-cursor:pointer;
-transition:.4s;
-animation:respirar 3s infinite;
+button:active {
+  transform: translateY(2px) scale(1);
+  box-shadow:
+    0 2px 0 rgba(0,0,0,.2),
+    0 4px 15px rgba(0,0,0,.2);
 }
 
-.apolo:hover{
-transform:rotateY(20deg) scale(1.2);
+.si {
+  background: linear-gradient(180deg, #ff006e 0%, #c9184a 100%);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,.3);
 }
 
-@keyframes respirar{
-50%{transform:scale(1.12)}
-}
-
-.corazon{
-position:absolute;
-animation:subir 2s linear forwards;
-}
-
-@keyframes subir{
-to{transform:translateY(-120px);opacity:0}
-}
-
-.globo{
-position:absolute;
-background:white;
-color:#333;
-padding:10px 15px;
-border-radius:20px;
-top:-40px;
-left:50%;
-transform:translateX(-50%);
-display:none;
+.no {
+  background: linear-gradient(180deg, #555 0%, #333 100%);
+  color: white;
+  transition: transform .15s ease;
 }
 
 /* ===== FLORES ===== */
-
-.flores span{
-position:absolute;
-animation:caer linear infinite;
+.flores span {
+  position: fixed;
+  top: -50px;
+  animation: caer linear infinite;
+  font-size: clamp(20px, 5vw, 28px);
+  pointer-events: none;
+  z-index: 0;
 }
 
-@keyframes caer{
-to{transform:translateY(110vh)}
+@keyframes caer {
+  to { transform: translateY(110vh) rotate(360deg); }
 }
 
 /* ===== FINAL ===== */
-
-.final{
-font-size:38px;
-font-weight:bold;
-animation:zoom 2s ease;
+.final {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 7vw, 2.8rem);
+  font-weight: bold;
+  animation: zoomIn 1.2s cubic-bezier(.34,1.56,.64,1) forwards;
+  text-shadow: 0 4px 20px rgba(0,0,0,.3);
 }
 
-@keyframes zoom{
-from{transform:scale(.3);opacity:0}
-to{transform:scale(1)}
+@keyframes zoomIn {
+  from { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
+/* Navegación galería */
+.nav-galeria {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nav-galeria button {
+  min-width: 52px;
+}
 </style>
 </head>
-
 <body>
 
 <div class="flores" id="flores"></div>
 
 <!-- LOGIN -->
 <div class="container" id="login">
-<h2>Ingresa la contraseña ❤️</h2>
-<input id="pass" placeholder="DDMM">
-<br><br>
-<button onclick="check()">Entrar 💌</button>
+  <div class="login-box">
+    <h2>Ingresa la contraseña ❤️</h2>
+    <p class="login-hint">Pista de contraseña: fecha en la que nos conocimos</p>
+    <input type="text" id="pass" placeholder="DDMM" inputmode="numeric" maxlength="4" autocomplete="off">
+    <br><br>
+    <button onclick="check()">Entrar 💌</button>
+  </div>
 </div>
 
 <!-- SOBRE -->
 <div class="container hidden" id="carta">
-<div class="envelope" onclick="abrirCarta()" id="sobre">
-<div class="envelope-body"></div>
-<div class="envelope-flap"></div>
-</div>
-<p>Toca el sobre</p>
+  <div class="envelope" onclick="abrirCarta()" id="sobre">
+    <div class="envelope-body"></div>
+    <div class="envelope-flap"></div>
+  </div>
+  <p>Toca el sobre</p>
 </div>
 
 <!-- PREGUNTA -->
 <div class="container hidden" id="pregunta">
-<h2>¿Quieres ser mi San Valentín? ❤️</h2>
-<button class="si" onclick="aceptar()">SÍ 💖</button>
-<button class="no" id="noBtn" onmouseover="huir()">NO 😢</button>
+  <h2>¿Quieres ser mi San Valentín? ❤️</h2>
+  <button class="si" onclick="aceptar()">SÍ 💖</button>
+  <button class="no" id="noBtn" onmouseover="huir()" ontouchstart="huir()">NO 😢</button>
 </div>
 
 <!-- MENSAJE -->
 <div class="container hidden" id="mensaje">
-<h2>Gracias por ser mi San Valentín 💘</h2>
-<button onclick="iniciarGaleria()">Continuar 🌹</button>
+  <h2>Gracias por ser mi San Valentín 💘</h2>
+  <button onclick="iniciarGaleria()">Continuar 🌹</button>
 </div>
 
-<!-- CARTA PRINCIPAL -->
+<!-- CARTA PRINCIPAL / GALERÍA -->
 <div class="container hidden" id="galeria">
+  <div class="card">
+    <div class="frase" id="frase"></div>
 
-<div class="card">
+    <div class="galeria">
+      <div class="foto-wrapper">
+        <div class="frame">
+          <img id="foto" class="foto" alt="Recuerdo">
+        </div>
+      </div>
 
-<div class="frase" id="frase"></div>
+      <div class="apolo-zone">
+        <div class="globo" id="globo">Te amo Ashly ❤️</div>
+        <div class="apolo" id="apolo" onclick="apolo()">🐈</div>
+        <p class="acaricia">Acaricia a Apolo</p>
+      </div>
+    </div>
 
-<div class="galeria">
-<img id="foto" class="foto">
-
-<div style="position:relative;">
-<div class="globo" id="globo">Te amo Ashly ❤️</div>
-<div class="apolo" onclick="apolo()">🐈</div>
-<p>Acaricia a Apolo</p>
-</div>
-</div>
-
-<div>
-<button onclick="prev()">⬅️</button>
-<button onclick="next()">➡️</button>
-</div>
-
-</div>
+    <div class="nav-galeria">
+      <button onclick="prev()">⬅️ Anterior</button>
+      <button onclick="next()">Siguiente ➡️</button>
+    </div>
+  </div>
 </div>
 
 <!-- FINAL -->
 <div class="container hidden" id="final">
-<div class="final">💖 FELIZ SAN VALENTÍN 💖</div>
-<br>
-<button onclick="location.reload()">Volver al inicio 🔄</button>
+  <div class="final">💖 FELIZ SAN VALENTÍN 💖</div>
+  <br>
+  <button onclick="location.reload()">Volver al inicio 🔄</button>
 </div>
 
 <audio id="ronroneo" src="ronroneo.mp3"></audio>
 <audio id="bgMusic" loop><source src="musica.mp3"></audio>
 
 <script>
-
-const frases=[
-"Eres lo mejor que me ha pasado",
-"Tu sonrisa ilumina mis días",
-"Contigo todo es mágico",
-"Me haces feliz",
-"Eres mi lugar seguro",
-"Amo cada momento contigo",
-"Eres mi inspiración",
-"Gracias por existir",
-"Eres mi todo",
-"Siempre contigo",
-"TE AMO MUCHO ❤️"
+const frases = [
+  "Eres lo mejor que me ha pasado",
+  "Tu sonrisa ilumina mis días",
+  "Contigo todo es mágico",
+  "Me haces feliz",
+  "Eres mi lugar seguro",
+  "Amo cada momento contigo",
+  "Eres mi inspiración",
+  "Gracias por existir",
+  "Eres mi todo",
+  "Siempre contigo",
+  "TE AMO MUCHO ❤️"
 ];
 
-let i=0,intentosNo=0;
+let i = 0, intentosNo = 0;
 
-function check(){
-if(pass.value==="2412"){
-login.classList.add("hidden");
-carta.classList.remove("hidden");
-}
-}
-
-function abrirCarta(){
-sobre.classList.add("open");
-setTimeout(()=>{
-carta.classList.add("hidden");
-pregunta.classList.remove("hidden");
-},1000);
+function check() {
+  if (pass.value === "2412") {
+    login.classList.add("hidden");
+    carta.classList.remove("hidden");
+  }
 }
 
-function huir(){
-intentosNo++;
-noBtn.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*200-100}px)`;
-if(intentosNo>4) noBtn.style.display="none";
-}
-noBtn.addEventListener("touchstart",huir);
-
-function aceptar(){pregunta.classList.add("hidden");mensaje.classList.remove("hidden")}
-function iniciarGaleria(){mensaje.classList.add("hidden");galeria.classList.remove("hidden");mostrar()}
-
-function mostrar(){
-foto.src="foto"+(i+1)+".jpeg";
-frase.innerText=frases[i];
+function abrirCarta() {
+  sobre.classList.add("open");
+  setTimeout(() => {
+    carta.classList.add("hidden");
+    pregunta.classList.remove("hidden");
+  }, 1000);
 }
 
-function next(){
-if(i<10){i++;mostrar()}
-else{
-galeria.classList.add("hidden");
-final.classList.remove("hidden");
+function huir() {
+  intentosNo++;
+  noBtn.style.transform = `translate(${Math.random() * 300 - 150}px, ${Math.random() * 200 - 100}px)`;
+  if (intentosNo > 4) noBtn.style.display = "none";
 }
-}
+noBtn.addEventListener("touchstart", function(e) { e.preventDefault(); huir(); }, { passive: false });
 
-function prev(){ if(i>0){i--;mostrar()} }
-
-function apolo(){
-ronroneo.play();
-globo.style.display="block";
-setTimeout(()=>globo.style.display="none",2000);
-for(let j=0;j<6;j++){
-let c=document.createElement("div");
-c.innerText="❤️";
-c.className="corazon";
-c.style.left=(Math.random()*60-30)+"px";
-document.querySelector(".apolo").parentElement.appendChild(c);
-setTimeout(()=>c.remove(),2000);
+function aceptar() {
+  pregunta.classList.add("hidden");
+  mensaje.classList.remove("hidden");
 }
+function iniciarGaleria() {
+  mensaje.classList.add("hidden");
+  galeria.classList.remove("hidden");
+  mostrar();
 }
 
-/* flores */
+const fotoEl = document.getElementById("foto");
+const fraseEl = document.getElementById("frase");
 
-for(let j=0;j<30;j++){
-let f=document.createElement("span");
-f.innerText="🌹";
-f.style.left=Math.random()*100+"%";
-f.style.animationDuration=(Math.random()*5+5)+"s";
-flores.appendChild(f);
+function mostrar() {
+  fotoEl.src = "foto" + (i + 1) + ".jpeg";
+  fraseEl.innerText = frases[i];
+  fotoEl.classList.remove("foto-salida");
+  fotoEl.classList.add("foto-enter");
 }
 
-document.addEventListener("click",()=>bgMusic.play(),{once:true});
+function next() {
+  if (i < 10) {
+    fotoEl.classList.remove("foto-enter");
+    fotoEl.classList.add("foto-salida");
+    setTimeout(() => {
+      i++;
+      mostrar();
+    }, 350);
+  } else {
+    galeria.classList.add("hidden");
+    final.classList.remove("hidden");
+  }
+}
 
+function prev() {
+  if (i > 0) {
+    fotoEl.classList.remove("foto-enter");
+    fotoEl.classList.add("foto-salida");
+    setTimeout(() => {
+      i--;
+      mostrar();
+    }, 350);
+  }
+}
+
+const apoloEl = document.getElementById("apolo");
+const globoEl = document.getElementById("globo");
+
+function apolo() {
+  const ronroneo = document.getElementById("ronroneo");
+  if (ronroneo) ronroneo.play().catch(() => {});
+  apoloEl.classList.add("petting");
+  setTimeout(() => apoloEl.classList.remove("petting"), 600);
+  globoEl.style.display = "block";
+  setTimeout(() => { globoEl.style.display = "none"; }, 2200);
+  for (let j = 0; j < 8; j++) {
+    const c = document.createElement("div");
+    c.innerText = "❤️";
+    c.className = "corazon";
+    c.style.left = (Math.random() * 80 - 40) + "px";
+    c.style.animationDelay = (j * 0.05) + "s";
+    apoloEl.parentElement.appendChild(c);
+    setTimeout(() => c.remove(), 2300);
+  }
+}
+
+// Flores cayendo
+for (let j = 0; j < 35; j++) {
+  const f = document.createElement("span");
+  f.innerText = ["🌹", "🌸", "💐"][j % 3];
+  f.style.left = Math.random() * 100 + "%";
+  f.style.animationDuration = (Math.random() * 5 + 6) + "s";
+  f.style.animationDelay = Math.random() * 4 + "s";
+  flores.appendChild(f);
+}
+
+document.addEventListener("click", () => {
+  const bg = document.getElementById("bgMusic");
+  if (bg) bg.play().catch(() => {});
+}, { once: true });
 </script>
 
 </body>
