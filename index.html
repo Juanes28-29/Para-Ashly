@@ -5,6 +5,7 @@
 <title>San Valentín ❤️</title>
 
 <style>
+
 body{
 margin:0;
 font-family:'Segoe UI';
@@ -15,19 +16,26 @@ display:flex;
 align-items:center;
 justify-content:center;
 color:white;
+perspective:1200px;
 }
 
-.hidden{display:none}
+/* ===== PARALLAX GLOBAL ===== */
 
 .container{
 text-align:center;
 animation:fadeIn 1s ease;
+transform-style:preserve-3d;
+transition:transform .2s;
 }
+
+.hidden{display:none}
 
 @keyframes fadeIn{
 from{opacity:0;transform:scale(.8)}
 to{opacity:1}
 }
+
+/* ===== INPUT ===== */
 
 input{
 padding:12px;
@@ -35,6 +43,8 @@ border-radius:10px;
 border:none;
 font-size:18px;
 }
+
+/* ===== BOTONES 3D ===== */
 
 button{
 padding:12px 20px;
@@ -44,22 +54,42 @@ cursor:pointer;
 font-size:18px;
 margin:10px;
 transition:.3s;
+transform-style:preserve-3d;
 }
 
-button:hover{transform:scale(1.1)}
+button:hover{
+transform:translateY(-6px) rotateX(20deg) scale(1.1);
+box-shadow:0 15px 30px rgba(0,0,0,.5);
+}
 
 .si{background:#ff006e;color:white}
 .no{background:#333;color:white}
+
+/* ===== CARTA 3D ===== */
 
 .carta{
 background:#fff3e0;
 color:#5a0000;
 padding:40px;
 border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
+box-shadow:0 20px 40px rgba(0,0,0,.5);
 cursor:pointer;
 font-size:28px;
+perspective:1000px;
+transform-style:preserve-3d;
+transition:1s;
 }
+
+.carta:hover{
+transform:rotateY(10deg) rotateX(5deg) scale(1.05);
+}
+
+.carta.abierta{
+transform:rotateY(180deg) scale(.9);
+opacity:0;
+}
+
+/* ===== GALERIA ===== */
 
 .galeria{
 display:flex;
@@ -67,10 +97,33 @@ align-items:center;
 gap:30px;
 }
 
+/* ===== FOTO 3D ===== */
+
 .foto{
 width:300px;
 border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,.5);
+box-shadow:0 30px 60px rgba(0,0,0,.6);
+transition:.6s;
+transform-style:preserve-3d;
+}
+
+.foto:hover{
+transform:rotateY(15deg) rotateX(5deg) scale(1.08);
+}
+
+/* ===== TRANSICIONES 3D ===== */
+
+.flipOut{animation:flipOut .6s forwards}
+.flipIn{animation:flipIn .6s forwards}
+
+@keyframes flipOut{
+from{transform:rotateY(0);opacity:1}
+to{transform:rotateY(90deg);opacity:0}
+}
+
+@keyframes flipIn{
+from{transform:rotateY(-90deg);opacity:0}
+to{transform:rotateY(0);opacity:1}
 }
 
 .frase{
@@ -78,12 +131,17 @@ font-size:26px;
 margin-bottom:15px;
 }
 
-/* ===== APolo PRO ===== */
+/* ===== APOLLO ===== */
 
 .apolo{
 font-size:140px;
 cursor:pointer;
 animation:respirar 3s infinite ease-in-out;
+transition:.4s;
+}
+
+.apolo:hover{
+transform:rotateY(20deg) rotateX(10deg) scale(1.15);
 }
 
 @keyframes respirar{
@@ -121,9 +179,9 @@ transform:translateX(-50%);
 display:none;
 }
 
-.nav{
-margin-top:20px;
-}
+.nav{margin-top:20px}
+
+/* ===== FLORES ===== */
 
 .flores span{
 position:absolute;
@@ -135,6 +193,7 @@ animation:caer linear infinite;
 from{transform:translateY(-100px)}
 to{transform:translateY(110vh)}
 }
+
 </style>
 </head>
 
@@ -142,7 +201,6 @@ to{transform:translateY(110vh)}
 
 <div class="flores" id="flores"></div>
 
-<!-- LOGIN -->
 <div class="container" id="login">
 <h1>❤️</h1>
 <p>Ingresa la contraseña</p>
@@ -151,27 +209,21 @@ to{transform:translateY(110vh)}
 <button onclick="check()">Entrar 💌</button>
 </div>
 
-<!-- CARTA -->
 <div class="container hidden" id="carta">
-<div class="carta" onclick="mostrarPregunta()">
-💌 Toca para abrir tu carta 💌
-</div>
+<div class="carta" onclick="mostrarPregunta()">💌 Toca para abrir tu carta 💌</div>
 </div>
 
-<!-- PREGUNTA -->
 <div class="container hidden" id="pregunta">
 <h2>¿Quieres ser mi San Valentín? ❤️</h2>
 <button class="si" onclick="aceptar()">SÍ 💖</button>
 <button class="no" id="noBtn" onmouseover="huir()">NO 😢</button>
 </div>
 
-<!-- MENSAJE -->
 <div class="container hidden" id="mensaje">
 <h2>Gracias por ser mi San Valentín 💘</h2>
 <button onclick="iniciarGaleria()">Continuar 🌹</button>
 </div>
 
-<!-- GALERIA -->
 <div class="container hidden" id="galeria">
 <div class="frase" id="frase"></div>
 
@@ -191,126 +243,73 @@ to{transform:translateY(110vh)}
 </div>
 </div>
 
-<!-- AUDIO RONRONEO -->
 <audio id="ronroneo" src="ronroneo.mp3"></audio>
 
+<audio id="bgMusic" loop>
+<source src="musica.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-const frases=[
-"Eres lo mejor que me ha pasado",
-"Tu sonrisa ilumina mis días",
-"Contigo todo es mágico",
-"Me haces feliz",
-"Eres mi lugar seguro",
-"Amo cada momento contigo",
-"Eres mi inspiración",
-"Gracias por existir",
-"Eres mi todo",
-"Siempre contigo",
-"TE AMO MUCHO ❤️"
-];
 
-let i=0;
-let intentosNo=0;
+const frases=[ "Eres lo mejor que me ha pasado","Tu sonrisa ilumina mis días","Contigo todo es mágico","Me haces feliz","Eres mi lugar seguro","Amo cada momento contigo","Eres mi inspiración","Gracias por existir","Eres mi todo","Siempre contigo","TE AMO MUCHO ❤️"];
 
-function check(){
-if(pass.value==="2412"){
-login.classList.add("hidden");
-carta.classList.remove("hidden");
-}
-}
+let i=0,intentosNo=0;
+
+function check(){ if(pass.value==="2412"){ login.classList.add("hidden"); carta.classList.remove("hidden"); } }
 
 function mostrarPregunta(){
-carta.classList.add("hidden");
-pregunta.classList.remove("hidden");
+document.querySelector(".carta").classList.add("abierta");
+setTimeout(()=>{ carta.classList.add("hidden"); pregunta.classList.remove("hidden"); },900);
 }
 
 function huir(){
 intentosNo++;
-let x=Math.random()*300-150;
-let y=Math.random()*200-100;
+let x=Math.random()*300-150,y=Math.random()*200-100;
 noBtn.style.transform=`translate(${x}px,${y}px)`;
-noBtn.style.position="relative";
-if(intentosNo>=5){
-noBtn.style.opacity="0";
-noBtn.style.pointerEvents="none";
+if(intentosNo>=5){ noBtn.style.opacity="0"; noBtn.style.pointerEvents="none"; }
 }
-}
-
 noBtn.addEventListener("touchstart",huir);
 
-function aceptar(){
-pregunta.classList.add("hidden");
-mensaje.classList.remove("hidden");
-}
+function aceptar(){ pregunta.classList.add("hidden"); mensaje.classList.remove("hidden"); }
 
-function iniciarGaleria(){
-mensaje.classList.add("hidden");
-galeria.classList.remove("hidden");
-mostrar();
-}
+function iniciarGaleria(){ mensaje.classList.add("hidden"); galeria.classList.remove("hidden"); mostrar(); }
 
 function mostrar(){
+foto.classList.add("flipOut");
+setTimeout(()=>{
 foto.src="foto"+(i+1)+".jpeg";
 frase.innerText=frases[i];
+foto.classList.remove("flipOut");
+foto.classList.add("flipIn");
+setTimeout(()=>foto.classList.remove("flipIn"),600);
+},300);
 }
 
-function next(){
-if(i<10){i++;mostrar();}
-else{mostrarFinal();}
-}
-
-function prev(){
-if(i>0){i--;mostrar();}
-}
+function next(){ if(i<10){i++;mostrar();} else mostrarFinal(); }
+function prev(){ if(i>0){i--;mostrar();} }
 
 function mostrarFinal(){
-galeria.innerHTML=`
-<h1 style="font-size:60px;">TE AMO MUCHO ❤️</h1>
-<br>
-<button onclick="volverInicio()">Volver al inicio 💌</button>
-`;
+galeria.innerHTML=`<h1 style="font-size:60px;">TE AMO MUCHO ❤️</h1><br><button onclick="volverInicio()">Volver al inicio 💌</button>`;
 }
+function volverInicio(){location.reload();}
 
-function volverInicio(){
-location.reload();
-}
-
-/* ===== APolo PRO INTERACTIVO ===== */
+/* ===== APOLLO ===== */
 
 function apolo(){
-
 const gato=document.querySelector(".apolo");
-const audio=document.getElementById("ronroneo");
-
-/* Vibración móvil */
-if(navigator.vibrate){
-navigator.vibrate(200);
-}
-
-/* Sonido */
-audio.currentTime=0;
-audio.play();
-
-/* Globo */
-globo.style.display="block";
-setTimeout(()=>globo.style.display="none",2000);
-
-/* Saltito */
-gato.style.animation="saltar 0.5s";
-setTimeout(()=>{
-gato.style.animation="respirar 3s infinite ease-in-out";
-},500);
-
-/* Corazones */
+ronroneo.currentTime=0; ronroneo.play();
+globo.style.display="block"; setTimeout(()=>globo.style.display="none",2000);
+gato.style.animation="saltar .5s"; setTimeout(()=>gato.style.animation="respirar 3s infinite",500);
 for(let j=0;j<6;j++){
 let c=document.createElement("div");
-c.innerText="❤️";
-c.className="corazon";
+c.innerText="❤️"; c.className="corazon";
 c.style.left=(Math.random()*60-30)+"px";
 gato.parentElement.appendChild(c);
 setTimeout(()=>c.remove(),2000);
 }
 }
+
+/* ===== FLORES ===== */
 
 function crearFlores(){
 for(let j=0;j<30;j++){
@@ -319,23 +318,24 @@ f.innerText="🌹";
 f.style.left=Math.random()*100+"%";
 f.style.animationDuration=(Math.random()*5+5)+"s";
 flores.appendChild(f);
-}
-}
+}}
 crearFlores();
-</script>
-<audio id="bgMusic" loop>
-  <source src="musica.mp3" type="audio/mpeg">
-</audio>
 
-<script>
-const music = document.getElementById("bgMusic");
+/* ===== PARALLAX ===== */
 
-// reproducir al primer toque (necesario en celulares)
-document.addEventListener("click", () => {
-    music.play();
-}, { once: true });
+document.addEventListener("mousemove",e=>{
+let x=(e.clientX/window.innerWidth-.5)*20;
+let y=(e.clientY/window.innerHeight-.5)*20;
+document.querySelectorAll(".container").forEach(c=>{
+c.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
+});
+});
+
+/* ===== MUSIC ===== */
+
+document.addEventListener("click",()=>bgMusic.play(),{once:true});
+
 </script>
 
 </body>
 </html>
-
