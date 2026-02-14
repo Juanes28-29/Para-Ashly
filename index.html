@@ -19,6 +19,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 color:white;
+perspective:1500px;
 }
 
 /* ===== CONTENEDORES ===== */
@@ -38,7 +39,7 @@ from{opacity:0;transform:scale(.8)}
 to{opacity:1}
 }
 
-/* ===== SOBRE ===== */
+/* ===== SOBRE 3D ===== */
 
 .envelope{
 width:320px;
@@ -47,6 +48,11 @@ position:relative;
 cursor:pointer;
 transition:1s;
 margin:auto;
+transform-style:preserve-3d;
+}
+
+.envelope:hover{
+transform:rotateY(10deg) rotateX(6deg) scale(1.05);
 }
 
 .envelope-body{
@@ -55,7 +61,7 @@ width:100%;
 height:100%;
 background:#fff0f3;
 border-radius:10px;
-box-shadow:0 20px 50px rgba(0,0,0,.5);
+box-shadow:0 20px 50px rgba(0,0,0,.6);
 }
 
 .envelope-flap{
@@ -78,19 +84,30 @@ transform:scale(.9) translateY(-100px);
 opacity:0;
 }
 
-/* ===== HOJA CARTA ROMANTICA ===== */
+/* ===== HOJA CARTA 3D ===== */
 
 .card{
 background:#fdf6e3;
 color:#5a0000;
 padding:35px;
 border-radius:12px;
-box-shadow:0 30px 70px rgba(0,0,0,.6);
+box-shadow:0 30px 70px rgba(0,0,0,.7);
 width:95%;
 max-width:700px;
 margin:auto;
 position:relative;
 border:2px solid #e0c8a0;
+transform-style:preserve-3d;
+transition:.6s;
+animation:flotar 5s infinite ease-in-out;
+}
+
+.card:hover{
+transform:rotateY(5deg) rotateX(3deg);
+}
+
+@keyframes flotar{
+50%{transform:translateY(-12px)}
 }
 
 /* textura papel */
@@ -108,7 +125,6 @@ pointer-events:none;
 border-radius:12px;
 }
 
-/* titulo decorativo */
 .card::after{
 content:"❤️ Feliz San Valentín ❤️";
 position:absolute;
@@ -130,11 +146,19 @@ align-items:center;
 justify-content:center;
 }
 
+/* FOTO 3D */
+
 .foto{
 width:260px;
 max-width:80vw;
 border-radius:12px;
-box-shadow:0 15px 40px rgba(0,0,0,.5);
+box-shadow:0 20px 60px rgba(0,0,0,.6);
+transition:.6s;
+transform-style:preserve-3d;
+}
+
+.foto:hover{
+transform:rotateY(15deg) scale(1.07);
 }
 
 .frase{
@@ -143,7 +167,7 @@ margin-bottom:20px;
 font-weight:600;
 }
 
-/* ===== BOTONES ===== */
+/* ===== BOTONES 3D ===== */
 
 button{
 padding:12px 24px;
@@ -152,21 +176,33 @@ border-radius:25px;
 cursor:pointer;
 font-size:18px;
 margin:10px;
-transition:.3s;
+transition:.4s;
+transform-style:preserve-3d;
 }
 
 button:hover{
-transform:translateY(-5px);
+transform:translateY(-6px) rotateX(10deg) scale(1.08);
+box-shadow:0 15px 40px rgba(0,0,0,.6);
 }
 
 .si{background:#ff006e;color:white}
 .no{background:#333;color:white}
 
-/* ===== APOLLO ===== */
+/* ===== APOLLO 3D ===== */
 
 .apolo{
 font-size:110px;
 cursor:pointer;
+transition:.4s;
+animation:respirar 3s infinite;
+}
+
+.apolo:hover{
+transform:rotateY(20deg) scale(1.2);
+}
+
+@keyframes respirar{
+50%{transform:scale(1.12)}
 }
 
 .corazon{
@@ -206,7 +242,12 @@ to{transform:translateY(110vh)}
 .final{
 font-size:38px;
 font-weight:bold;
-animation:fade 2s ease;
+animation:zoom 2s ease;
+}
+
+@keyframes zoom{
+from{transform:scale(.3);opacity:0}
+to{transform:scale(1)}
 }
 
 </style>
@@ -339,8 +380,6 @@ final.classList.remove("hidden");
 
 function prev(){ if(i>0){i--;mostrar()} }
 
-/* Apolo */
-
 function apolo(){
 ronroneo.play();
 globo.style.display="block";
@@ -365,7 +404,6 @@ f.style.animationDuration=(Math.random()*5+5)+"s";
 flores.appendChild(f);
 }
 
-/* música */
 document.addEventListener("click",()=>bgMusic.play(),{once:true});
 
 </script>
