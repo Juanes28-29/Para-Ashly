@@ -339,14 +339,17 @@ body {
 }
 
 .apolo {
-  font-size: clamp(100px, 28vw, 140px);
+  width: clamp(120px, 28vw, 160px);
+  height: auto;
+  display: block;
   cursor: pointer;
   user-select: none;
   transform-style: preserve-3d;
-  display: inline-block;
   animation: apoloIdle 4s ease-in-out infinite;
   transition: transform .25s ease;
   filter: drop-shadow(0 10px 20px rgba(0,0,0,.25));
+  border-radius: 12px;
+  object-fit: cover;
 }
 
 .apolo:hover {
@@ -585,7 +588,7 @@ button:active {
 
       <div class="apolo-zone">
         <div class="globo" id="globo">Te amo Ashly ❤️</div>
-        <div class="apolo" id="apolo" onclick="apolo()">🐈</div>
+        <img class="apolo" id="apolo" src="Apolo.jpeg" alt="Apolo" onclick="apolo()">
         <p class="acaricia">Acaricia a Apolo</p>
       </div>
     </div>
@@ -730,4 +733,3 @@ document.addEventListener("click", () => {
 
 </body>
 </html>
-
