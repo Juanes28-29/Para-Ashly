@@ -342,6 +342,8 @@ body {
   width: clamp(120px, 28vw, 160px);
   height: auto;
   display: block;
+  position: relative;
+  z-index: 1;
   cursor: pointer;
   user-select: none;
   transform-style: preserve-3d;
@@ -409,6 +411,7 @@ body {
 
 .globo {
   position: absolute;
+  z-index: 10;
   background: linear-gradient(145deg, #fff 0%, #fff5f7 100%);
   color: var(--vino);
   padding: 12px 18px;
