@@ -2,39 +2,23 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>San Valentín ❤️</title>
 
 <style>
 
-/* ===== FONDO CINEMATOGRAFICO ===== */
+/* ===== FONDO ===== */
 
 body{
 margin:0;
 font-family:'Segoe UI';
 background:radial-gradient(circle at top,#ff4d6d,#8b0000 70%);
-height:100vh;
+min-height:100vh;
 overflow:hidden;
 display:flex;
 align-items:center;
 justify-content:center;
 color:white;
-perspective:1500px;
-}
-
-/* brillo suave animado */
-
-body::after{
-content:"";
-position:fixed;
-inset:0;
-background:radial-gradient(circle,#ffffff22,transparent 60%);
-animation:glow 6s infinite alternate;
-pointer-events:none;
-}
-
-@keyframes glow{
-from{opacity:.3}
-to{opacity:.8}
 }
 
 /* ===== CONTENEDORES ===== */
@@ -42,6 +26,9 @@ to{opacity:.8}
 .container{
 text-align:center;
 animation:fade 1s ease;
+width:100%;
+padding:20px;
+box-sizing:border-box;
 }
 
 .hidden{display:none}
@@ -51,15 +38,15 @@ from{opacity:0;transform:scale(.8)}
 to{opacity:1}
 }
 
-/* ===== SOBRE REAL ===== */
+/* ===== SOBRE ===== */
 
 .envelope{
 width:320px;
 height:220px;
 position:relative;
 cursor:pointer;
-transform-style:preserve-3d;
 transition:1s;
+margin:auto;
 }
 
 .envelope-body{
@@ -91,70 +78,67 @@ transform:scale(.9) translateY(-100px);
 opacity:0;
 }
 
-/* ===== CARTA ROMANTICA ===== */
+/* ===== HOJA CARTA ROMANTICA ===== */
 
 .card{
-background:#fff7f7;
+background:#fdf6e3;
 color:#5a0000;
-padding:40px;
-border-radius:25px;
-box-shadow:0 20px 60px rgba(0,0,0,.5);
-width:650px;
-max-width:90vw;
+padding:35px;
+border-radius:12px;
+box-shadow:0 30px 70px rgba(0,0,0,.6);
+width:95%;
+max-width:700px;
+margin:auto;
 position:relative;
-overflow:hidden;
-animation:cinematic 1s ease;
+border:2px solid #e0c8a0;
 }
 
+/* textura papel */
 .card::before{
-content:"❤️ ❤️ ❤️ ❤️ ❤️";
+content:"";
+position:absolute;
+inset:0;
+background:repeating-linear-gradient(
+0deg,
+transparent,
+transparent 24px,
+rgba(0,0,0,.04) 25px
+);
+pointer-events:none;
+border-radius:12px;
+}
+
+/* titulo decorativo */
+.card::after{
+content:"❤️ Feliz San Valentín ❤️";
 position:absolute;
 top:10px;
 left:0;
 right:0;
 text-align:center;
-font-size:22px;
-opacity:.2;
-}
-
-.card::after{
-content:"SAN VALENTÍN";
-position:absolute;
-bottom:10px;
-left:0;
-right:0;
-text-align:center;
 font-weight:bold;
-opacity:.2;
-}
-
-@keyframes cinematic{
-from{opacity:0;transform:translateY(100px) scale(.8)}
-to{opacity:1}
+opacity:.25;
 }
 
 /* ===== GALERIA ===== */
 
 .galeria{
 display:flex;
-gap:40px;
+flex-wrap:wrap;
+gap:30px;
 align-items:center;
 justify-content:center;
 }
 
 .foto{
 width:260px;
-border-radius:20px;
-box-shadow:0 20px 50px rgba(0,0,0,.6);
-transition:.6s;
-}
-
-.foto:hover{
-transform:scale(1.05) rotateY(8deg);
+max-width:80vw;
+border-radius:12px;
+box-shadow:0 15px 40px rgba(0,0,0,.5);
 }
 
 .frase{
-font-size:24px;
+font-size:22px;
 margin-bottom:20px;
 font-weight:600;
 }
@@ -162,7 +146,7 @@ font-weight:600;
 /* ===== BOTONES ===== */
 
 button{
-padding:12px 22px;
+padding:12px 24px;
 border:none;
 border-radius:25px;
 cursor:pointer;
@@ -173,7 +157,6 @@ transition:.3s;
 
 button:hover{
 transform:translateY(-5px);
-box-shadow:0 10px 30px rgba(0,0,0,.5);
 }
 
 .si{background:#ff006e;color:white}
@@ -182,13 +165,8 @@ box-shadow:0 10px 30px rgba(0,0,0,.5);
 /* ===== APOLLO ===== */
 
 .apolo{
-font-size:120px;
+font-size:110px;
 cursor:pointer;
-animation:respirar 3s infinite;
-}
-
-@keyframes respirar{
-50%{transform:scale(1.1)}
 }
 
 .corazon{
@@ -212,7 +190,7 @@ transform:translateX(-50%);
 display:none;
 }
 
-/* flores */
+/* ===== FLORES ===== */
 
 .flores span{
 position:absolute;
@@ -221,6 +199,14 @@ animation:caer linear infinite;
 
 @keyframes caer{
 to{transform:translateY(110vh)}
+}
+
+/* ===== FINAL ===== */
+
+.final{
+font-size:38px;
+font-weight:bold;
+animation:fade 2s ease;
 }
 
 </style>
@@ -285,6 +271,13 @@ to{transform:translateY(110vh)}
 </div>
 </div>
 
+<!-- FINAL -->
+<div class="container hidden" id="final">
+<div class="final">💖 FELIZ SAN VALENTÍN 💖</div>
+<br>
+<button onclick="location.reload()">Volver al inicio 🔄</button>
+</div>
+
 <audio id="ronroneo" src="ronroneo.mp3"></audio>
 <audio id="bgMusic" loop><source src="musica.mp3"></audio>
 
@@ -336,7 +329,14 @@ foto.src="foto"+(i+1)+".jpeg";
 frase.innerText=frases[i];
 }
 
-function next(){ if(i<10){i++;mostrar()} else location.reload() }
+function next(){
+if(i<10){i++;mostrar()}
+else{
+galeria.classList.add("hidden");
+final.classList.remove("hidden");
+}
+}
+
 function prev(){ if(i>0){i--;mostrar()} }
 
 /* Apolo */
