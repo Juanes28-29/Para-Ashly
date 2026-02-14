@@ -6,7 +6,7 @@
 <title>San Valentín ❤️</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&family=Playfair+Display:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 /* ===== VARIABLES Y BASE ===== */
@@ -25,7 +25,7 @@
 
 body {
   margin: 0;
-  font-family: 'Pacifico', 'Great Vibes', cursive;
+  font-family: 'Nunito', 'Segoe UI', sans-serif;
   background: url('Fondo.jpeg') center center / cover no-repeat fixed;
   min-height: 100vh;
   min-height: 100dvh;
@@ -104,7 +104,7 @@ body {
 }
 
 #login h2 {
-  font-family: 'Great Vibes', cursive;
+  font-family: 'Nunito', sans-serif;
   font-size: clamp(1.5rem, 5vw, 1.9rem);
   margin: 0 0 8px 0;
   color: var(--vino);
@@ -236,7 +236,7 @@ body {
   left: 0;
   right: 0;
   text-align: center;
-  font-family: 'Great Vibes', cursive;
+  font-family: 'Nunito', sans-serif;
   font-weight: bold;
   font-size: clamp(0.9rem, 3vw, 1.1rem);
   opacity: .2;
@@ -324,7 +324,7 @@ body {
 }
 
 .frase {
-  font-family: 'Great Vibes', cursive;
+  font-family: 'Nunito', sans-serif;
   font-size: clamp(1.2rem, 4.5vw, 1.6rem);
   margin-bottom: clamp(16px, 4vw, 24px);
   font-weight: 600;
@@ -462,7 +462,7 @@ button {
   cursor: pointer;
   font-size: clamp(1rem, 4vw, 1.2rem);
   margin: 10px;
-  font-family: 'Pacifico', cursive;
+  font-family: 'Nunito', sans-serif;
   font-weight: 700;
   transform-style: preserve-3d;
   transition: transform .25s ease, box-shadow .25s ease;
@@ -514,7 +514,7 @@ button:active {
 
 /* ===== FINAL ===== */
 .final {
-  font-family: 'Great Vibes', cursive;
+  font-family: 'Nunito', sans-serif;
   font-size: clamp(1.8rem, 7vw, 2.8rem);
   font-weight: bold;
   animation: zoomIn 1.2s cubic-bezier(.34,1.56,.64,1) forwards;
@@ -700,12 +700,24 @@ function prev() {
 const apoloEl = document.getElementById("apolo");
 const globoEl = document.getElementById("globo");
 
+const mensajesApolo = [
+  "Te amo Ashly ❤️",
+  "Eres mi humana favorita 👑",
+  "Gracias por dejarme dormir en tu cama 😴",
+  "¿Qué miras? 👀",
+  "Ya es suficiente 😾"
+];
+let toquesApolo = 0;
+
 function apolo() {
   const ronroneo = document.getElementById("ronroneo");
   if (ronroneo) ronroneo.play().catch(() => {});
   apoloEl.classList.add("petting");
   setTimeout(() => apoloEl.classList.remove("petting"), 600);
+  const indice = toquesApolo % 5;
+  globoEl.innerText = mensajesApolo[indice];
   globoEl.style.display = "block";
+  toquesApolo++;
   setTimeout(() => { globoEl.style.display = "none"; }, 2200);
   for (let j = 0; j < 8; j++) {
     const c = document.createElement("div");
