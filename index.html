@@ -323,6 +323,19 @@ flores.appendChild(f);
 }
 crearFlores();
 </script>
+<audio id="bgMusic" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById("bgMusic");
+
+// reproducir al primer toque (necesario en celulares)
+document.addEventListener("click", () => {
+    music.play();
+}, { once: true });
+</script>
 
 </body>
 </html>
+
