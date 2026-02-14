@@ -6,165 +6,198 @@
 
 <style>
 
+/* ===== FONDO CINEMATOGRAFICO ===== */
+
 body{
 margin:0;
 font-family:'Segoe UI';
-background:linear-gradient(135deg,#8b0000,#ff4d6d,#ff99ac);
+background:radial-gradient(circle at top,#ff4d6d,#8b0000 70%);
 height:100vh;
 overflow:hidden;
 display:flex;
 align-items:center;
 justify-content:center;
 color:white;
-perspective:1200px;
+perspective:1500px;
 }
 
-/* ===== PARALLAX GLOBAL ===== */
+/* brillo suave animado */
+
+body::after{
+content:"";
+position:fixed;
+inset:0;
+background:radial-gradient(circle,#ffffff22,transparent 60%);
+animation:glow 6s infinite alternate;
+pointer-events:none;
+}
+
+@keyframes glow{
+from{opacity:.3}
+to{opacity:.8}
+}
+
+/* ===== CONTENEDORES ===== */
 
 .container{
 text-align:center;
-animation:fadeIn 1s ease;
-transform-style:preserve-3d;
-transition:transform .2s;
+animation:fade 1s ease;
 }
 
 .hidden{display:none}
 
-@keyframes fadeIn{
+@keyframes fade{
 from{opacity:0;transform:scale(.8)}
 to{opacity:1}
 }
 
-/* ===== INPUT ===== */
+/* ===== SOBRE REAL ===== */
 
-input{
-padding:12px;
-border-radius:10px;
-border:none;
-font-size:18px;
-}
-
-/* ===== BOTONES 3D ===== */
-
-button{
-padding:12px 20px;
-border:none;
-border-radius:25px;
+.envelope{
+width:320px;
+height:220px;
+position:relative;
 cursor:pointer;
-font-size:18px;
-margin:10px;
-transition:.3s;
-transform-style:preserve-3d;
-}
-
-button:hover{
-transform:translateY(-6px) rotateX(20deg) scale(1.1);
-box-shadow:0 15px 30px rgba(0,0,0,.5);
-}
-
-.si{background:#ff006e;color:white}
-.no{background:#333;color:white}
-
-/* ===== CARTA 3D ===== */
-
-.carta{
-background:#fff3e0;
-color:#5a0000;
-padding:40px;
-border-radius:20px;
-box-shadow:0 20px 40px rgba(0,0,0,.5);
-cursor:pointer;
-font-size:28px;
-perspective:1000px;
 transform-style:preserve-3d;
 transition:1s;
 }
 
-.carta:hover{
-transform:rotateY(10deg) rotateX(5deg) scale(1.05);
+.envelope-body{
+position:absolute;
+width:100%;
+height:100%;
+background:#fff0f3;
+border-radius:10px;
+box-shadow:0 20px 50px rgba(0,0,0,.5);
 }
 
-.carta.abierta{
-transform:rotateY(180deg) scale(.9);
+.envelope-flap{
+position:absolute;
+top:0;
+width:100%;
+height:110px;
+background:#ff4d6d;
+clip-path:polygon(0 0,100% 0,50% 100%);
+transform-origin:top;
+transition:1s;
+}
+
+.envelope.open .envelope-flap{
+transform:rotateX(180deg);
+}
+
+.envelope.open{
+transform:scale(.9) translateY(-100px);
 opacity:0;
+}
+
+/* ===== CARTA ROMANTICA ===== */
+
+.card{
+background:#fff7f7;
+color:#5a0000;
+padding:40px;
+border-radius:25px;
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+width:650px;
+max-width:90vw;
+position:relative;
+overflow:hidden;
+animation:cinematic 1s ease;
+}
+
+.card::before{
+content:"❤️ ❤️ ❤️ ❤️ ❤️";
+position:absolute;
+top:10px;
+left:0;
+right:0;
+text-align:center;
+font-size:22px;
+opacity:.2;
+}
+
+.card::after{
+content:"SAN VALENTÍN";
+position:absolute;
+bottom:10px;
+left:0;
+right:0;
+text-align:center;
+font-weight:bold;
+opacity:.2;
+}
+
+@keyframes cinematic{
+from{opacity:0;transform:translateY(100px) scale(.8)}
+to{opacity:1}
 }
 
 /* ===== GALERIA ===== */
 
 .galeria{
 display:flex;
+gap:40px;
 align-items:center;
-gap:30px;
+justify-content:center;
 }
 
-/* ===== FOTO 3D ===== */
-
 .foto{
-width:300px;
+width:260px;
 border-radius:20px;
-box-shadow:0 30px 60px rgba(0,0,0,.6);
+box-shadow:0 20px 50px rgba(0,0,0,.6);
 transition:.6s;
-transform-style:preserve-3d;
 }
 
 .foto:hover{
-transform:rotateY(15deg) rotateX(5deg) scale(1.08);
-}
-
-/* ===== TRANSICIONES 3D ===== */
-
-.flipOut{animation:flipOut .6s forwards}
-.flipIn{animation:flipIn .6s forwards}
-
-@keyframes flipOut{
-from{transform:rotateY(0);opacity:1}
-to{transform:rotateY(90deg);opacity:0}
-}
-
-@keyframes flipIn{
-from{transform:rotateY(-90deg);opacity:0}
-to{transform:rotateY(0);opacity:1}
+transform:scale(1.05) rotateY(8deg);
 }
 
 .frase{
-font-size:26px;
-margin-bottom:15px;
+font-size:24px;
+margin-bottom:20px;
+font-weight:600;
 }
+
+/* ===== BOTONES ===== */
+
+button{
+padding:12px 22px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+font-size:18px;
+margin:10px;
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+
+.si{background:#ff006e;color:white}
+.no{background:#333;color:white}
 
 /* ===== APOLLO ===== */
 
 .apolo{
-font-size:140px;
+font-size:120px;
 cursor:pointer;
-animation:respirar 3s infinite ease-in-out;
-transition:.4s;
-}
-
-.apolo:hover{
-transform:rotateY(20deg) rotateX(10deg) scale(1.15);
+animation:respirar 3s infinite;
 }
 
 @keyframes respirar{
-0%{transform:scale(1)}
-50%{transform:scale(1.08)}
-100%{transform:scale(1)}
-}
-
-@keyframes saltar{
-0%{transform:translateY(0)}
-50%{transform:translateY(-20px)}
-100%{transform:translateY(0)}
+50%{transform:scale(1.1)}
 }
 
 .corazon{
 position:absolute;
-font-size:20px;
 animation:subir 2s linear forwards;
 }
 
 @keyframes subir{
-0%{transform:translateY(0);opacity:1}
-100%{transform:translateY(-120px);opacity:0}
+to{transform:translateY(-120px);opacity:0}
 }
 
 .globo{
@@ -179,18 +212,14 @@ transform:translateX(-50%);
 display:none;
 }
 
-.nav{margin-top:20px}
-
-/* ===== FLORES ===== */
+/* flores */
 
 .flores span{
 position:absolute;
-font-size:20px;
 animation:caer linear infinite;
 }
 
 @keyframes caer{
-from{transform:translateY(-100px)}
 to{transform:translateY(110vh)}
 }
 
@@ -201,30 +230,41 @@ to{transform:translateY(110vh)}
 
 <div class="flores" id="flores"></div>
 
+<!-- LOGIN -->
 <div class="container" id="login">
-<h1>❤️</h1>
-<p>Ingresa la contraseña</p>
+<h2>Ingresa la contraseña ❤️</h2>
 <input id="pass" placeholder="DDMM">
 <br><br>
 <button onclick="check()">Entrar 💌</button>
 </div>
 
+<!-- SOBRE -->
 <div class="container hidden" id="carta">
-<div class="carta" onclick="mostrarPregunta()">💌 Toca para abrir tu carta 💌</div>
+<div class="envelope" onclick="abrirCarta()" id="sobre">
+<div class="envelope-body"></div>
+<div class="envelope-flap"></div>
+</div>
+<p>Toca el sobre</p>
 </div>
 
+<!-- PREGUNTA -->
 <div class="container hidden" id="pregunta">
 <h2>¿Quieres ser mi San Valentín? ❤️</h2>
 <button class="si" onclick="aceptar()">SÍ 💖</button>
 <button class="no" id="noBtn" onmouseover="huir()">NO 😢</button>
 </div>
 
+<!-- MENSAJE -->
 <div class="container hidden" id="mensaje">
 <h2>Gracias por ser mi San Valentín 💘</h2>
 <button onclick="iniciarGaleria()">Continuar 🌹</button>
 </div>
 
+<!-- CARTA PRINCIPAL -->
 <div class="container hidden" id="galeria">
+
+<div class="card">
+
 <div class="frase" id="frase"></div>
 
 <div class="galeria">
@@ -237,102 +277,95 @@ to{transform:translateY(110vh)}
 </div>
 </div>
 
-<div class="nav">
-<button onclick="prev()">⬅️ Anterior</button>
-<button onclick="next()">Siguiente ➡️</button>
+<div>
+<button onclick="prev()">⬅️</button>
+<button onclick="next()">➡️</button>
+</div>
+
 </div>
 </div>
 
 <audio id="ronroneo" src="ronroneo.mp3"></audio>
-
-<audio id="bgMusic" loop>
-<source src="musica.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgMusic" loop><source src="musica.mp3"></audio>
 
 <script>
 
-const frases=[ "Eres lo mejor que me ha pasado","Tu sonrisa ilumina mis días","Contigo todo es mágico","Me haces feliz","Eres mi lugar seguro","Amo cada momento contigo","Eres mi inspiración","Gracias por existir","Eres mi todo","Siempre contigo","TE AMO MUCHO ❤️"];
+const frases=[
+"Eres lo mejor que me ha pasado",
+"Tu sonrisa ilumina mis días",
+"Contigo todo es mágico",
+"Me haces feliz",
+"Eres mi lugar seguro",
+"Amo cada momento contigo",
+"Eres mi inspiración",
+"Gracias por existir",
+"Eres mi todo",
+"Siempre contigo",
+"TE AMO MUCHO ❤️"
+];
 
 let i=0,intentosNo=0;
 
-function check(){ if(pass.value==="2412"){ login.classList.add("hidden"); carta.classList.remove("hidden"); } }
+function check(){
+if(pass.value==="2412"){
+login.classList.add("hidden");
+carta.classList.remove("hidden");
+}
+}
 
-function mostrarPregunta(){
-document.querySelector(".carta").classList.add("abierta");
-setTimeout(()=>{ carta.classList.add("hidden"); pregunta.classList.remove("hidden"); },900);
+function abrirCarta(){
+sobre.classList.add("open");
+setTimeout(()=>{
+carta.classList.add("hidden");
+pregunta.classList.remove("hidden");
+},1000);
 }
 
 function huir(){
 intentosNo++;
-let x=Math.random()*300-150,y=Math.random()*200-100;
-noBtn.style.transform=`translate(${x}px,${y}px)`;
-if(intentosNo>=5){ noBtn.style.opacity="0"; noBtn.style.pointerEvents="none"; }
+noBtn.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*200-100}px)`;
+if(intentosNo>4) noBtn.style.display="none";
 }
 noBtn.addEventListener("touchstart",huir);
 
-function aceptar(){ pregunta.classList.add("hidden"); mensaje.classList.remove("hidden"); }
-
-function iniciarGaleria(){ mensaje.classList.add("hidden"); galeria.classList.remove("hidden"); mostrar(); }
+function aceptar(){pregunta.classList.add("hidden");mensaje.classList.remove("hidden")}
+function iniciarGaleria(){mensaje.classList.add("hidden");galeria.classList.remove("hidden");mostrar()}
 
 function mostrar(){
-foto.classList.add("flipOut");
-setTimeout(()=>{
 foto.src="foto"+(i+1)+".jpeg";
 frase.innerText=frases[i];
-foto.classList.remove("flipOut");
-foto.classList.add("flipIn");
-setTimeout(()=>foto.classList.remove("flipIn"),600);
-},300);
 }
 
-function next(){ if(i<10){i++;mostrar();} else mostrarFinal(); }
-function prev(){ if(i>0){i--;mostrar();} }
+function next(){ if(i<10){i++;mostrar()} else location.reload() }
+function prev(){ if(i>0){i--;mostrar()} }
 
-function mostrarFinal(){
-galeria.innerHTML=`<h1 style="font-size:60px;">TE AMO MUCHO ❤️</h1><br><button onclick="volverInicio()">Volver al inicio 💌</button>`;
-}
-function volverInicio(){location.reload();}
-
-/* ===== APOLLO ===== */
+/* Apolo */
 
 function apolo(){
-const gato=document.querySelector(".apolo");
-ronroneo.currentTime=0; ronroneo.play();
-globo.style.display="block"; setTimeout(()=>globo.style.display="none",2000);
-gato.style.animation="saltar .5s"; setTimeout(()=>gato.style.animation="respirar 3s infinite",500);
+ronroneo.play();
+globo.style.display="block";
+setTimeout(()=>globo.style.display="none",2000);
 for(let j=0;j<6;j++){
 let c=document.createElement("div");
-c.innerText="❤️"; c.className="corazon";
+c.innerText="❤️";
+c.className="corazon";
 c.style.left=(Math.random()*60-30)+"px";
-gato.parentElement.appendChild(c);
+document.querySelector(".apolo").parentElement.appendChild(c);
 setTimeout(()=>c.remove(),2000);
 }
 }
 
-/* ===== FLORES ===== */
+/* flores */
 
-function crearFlores(){
 for(let j=0;j<30;j++){
 let f=document.createElement("span");
 f.innerText="🌹";
 f.style.left=Math.random()*100+"%";
 f.style.animationDuration=(Math.random()*5+5)+"s";
 flores.appendChild(f);
-}}
-crearFlores();
+}
 
-/* ===== PARALLAX ===== */
-
-document.addEventListener("mousemove",e=>{
-let x=(e.clientX/window.innerWidth-.5)*20;
-let y=(e.clientY/window.innerHeight-.5)*20;
-document.querySelectorAll(".container").forEach(c=>{
-c.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
-});
-});
-
-/* ===== MUSIC ===== */
-
+/* música */
 document.addEventListener("click",()=>bgMusic.play(),{once:true});
 
 </script>
